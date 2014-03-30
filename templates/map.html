@@ -73,6 +73,8 @@ function initialize() {
       infowindow.close();
     });
 
+    map.setCenter(pos);
+
     var arr =[]
 
   $.get("{% url 'coor' %}?latitude="+latitude+"&longitude="+longitude,
@@ -83,7 +85,7 @@ function initialize() {
       var marker,i, htmlBody;
 
       var infowindow = new google.maps.InfoWindow();
-
+      var image = {{ STATIC_URL }} + "img/gomas.png";
       for (i = 0; i < data.length; i++) 
       {
         var pos = new google.maps.LatLng(data[i].geometry.coordinates[1],
@@ -94,6 +96,7 @@ function initialize() {
           position: pos,
           title:"Hello World!",
           animation: google.maps.Animation.DROP,
+          icon: image
         });
 
         google.maps.event.addListener(marker, 'click', (function(marker, i) {
@@ -115,7 +118,7 @@ function initialize() {
         
         google.maps.event.addListener(marker, 'mouseover', (function(marker, i) {
         return function() {
-          htmlBody = "<table class='table table-bordered'>"
+          htmlBody = "<table class='table table-bordered' style='color: black;'>"
           + "<tr><th>Name</th><td>"+ data[i].properties.name +"</td><tr>"
           + "<th>Administrator</th><td>"+ data[i].properties.administrator +"</td></tr>"
           + "<tr><th>Telephone</th><td>"+ data[i].properties.phone +"</td></tr>"
@@ -124,8 +127,6 @@ function initialize() {
           infowindow.open(map, marker);
           }
         })(marker, i));
-
-        map.setCenter(pos);
       }
      
      // renderMustache(json)
@@ -157,8 +158,6 @@ function handleNoGeolocation(errorFlag) {
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);
-
-    
     </script>
 
   
