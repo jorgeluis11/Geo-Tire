@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Goma</title>
+    <title>Geo-tires</title>
 
     <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.0/jquery.js"></script>
     <!-- Bootstrap Core CSS -->
@@ -48,6 +48,18 @@
         background-color: rgba(0,0,0,0.6)
     }
 
+    #arrow{
+        font-size:50px;
+        border:1px solid white;
+        padding:1px 12px;
+        border-radius:40px;
+
+    }
+    .page-scroll:hover a
+    {
+        color:#FFF;
+    } 
+
   /*  #first-container
     {
         z-index: 900px;
@@ -69,7 +81,7 @@
                     <i class="fa fa-bars"></i>
                 </button>
                 <a class="navbar-brand" href="#page-top">
-                    <i class="fa fa-play-circle"></i>  <span class="light">Geo-tire</span>
+                 <span class="light">Geo-tire</span>
                 </a>
             </div>
 
@@ -105,7 +117,7 @@
                         </h3>
                         <p class="intro-text">Find the nearest tire place from you location</p>
                         <div class="page-scroll">
-                            <a href="#about" class="btn btn-circle">
+                            <a  id = 'arrow'href="#about" class="btn btn-circle">
                                 <i class="fa fa-angle-double-down animated"></i>
                             </a>
                         </div>
@@ -123,7 +135,7 @@
             <div class="row">
                 <div class="col-lg-10 col-lg-offset-1 ">
                    <article id="location">
-                      <h1 style="margin-top: 0; margin-bottom: 0;">
+                      <h1 style="margin-top: 0; margin-bottom: 0; color:#FFF">
                         Location
                                             </h1>
 
@@ -161,21 +173,17 @@
 <section id="contact" class="container content-section text-center">
     <div class="row">
         <div class="col-lg-8 col-lg-offset-2">
-            <h2>Contact Start Bootstrap</h2>
+            <h2>Contact us</h2>
             <p>Feel free to email us to provide some feedback on our templates, give us suggestions for new templates and themes, or to just say hello!</p>
-            <p>feedback@startbootstrap.com</p>
-            <ul class="list-inline banner-social-buttons">
-                <li><a href="https://twitter.com/SBootstrap" class="btn btn-default btn-lg"><i class="fa fa-twitter fa-fw"></i> <span class="network-name">Twitter</span></a>
-                </li>
-                <li><a href="https://github.com/IronSummitMedia/startbootstrap" class="btn btn-default btn-lg"><i class="fa fa-github fa-fw"></i> <span class="network-name">Github</span></a>
-                </li>
-                <li><a href="https://plus.google.com/+Startbootstrap/posts" class="btn btn-default btn-lg"><i class="fa fa-google-plus fa-fw"></i> <span class="network-name">Google+</span></a>
-                </li>
-            </ul>
+                    <ul class="list-inline banner-social-buttons">
+                    <li><a href="https://github.com/jorgeluis11/hackMaya2014" class="btn btn-default btn-lg"><i class="fa fa-github fa-fw"></i> <span class="network-name">Github</span></a>
+                    </li>
+                   
+                </ul>
+
         </div>
     </div>
 </section>
-<div id="map"></div>
 
 
 
