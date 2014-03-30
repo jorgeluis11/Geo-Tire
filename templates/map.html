@@ -132,13 +132,12 @@ function initialize() {
             if (status == google.maps.DirectionsStatus.OK) {
               directionsRenderer.setDirections(response);
               directionsRenderer.setMap(map);
+              infowindow.close(map, marker);
             } else {
               alert('Error: ' + status);
             }
           });          
         }}(marker,i)));
-
-         
 
         google.maps.event.addListener(marker, 'mouseover', (function(marker, i) {
         return function() {
