@@ -169,9 +169,9 @@ a:focus {
     margin-top: 15px;
     padding: 7px 16px;
     border: 2px solid #104386;
-    border-radius: 35px;
-    font-size: 40px;
-    color: #000;
+    border-radius: 45px;
+    font-size: 60px;
+    color: #FFF;
     background: 0 0;
     -webkit-transition: background .3s ease-in-out;
     -moz-transition: background .3s ease-in-out;
@@ -245,7 +245,7 @@ a:focus {
     width: 100%;
     padding: 50px 0;
     color: #fff;
-    background: url(../img/downloads-bg.jpg) no-repeat center center scroll;
+    background: url('http://farm9.staticflickr.com/8443/7840761606_0d72223d37_h.jpg') no-repeat center center scroll;
     background-color: #000;
     -webkit-background-size: cover;
     -moz-background-size: cover;
