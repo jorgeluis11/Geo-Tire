@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Geolocation</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/mustache.js/0.7.2/mustache.min.js"></script>
+    <style>
+      html, body{
+        margin: 0px;
+        padding: 0px;
+
+      }
+
+      #map-canvas
+      {
+        width: 50%;
+        height: 600px;
+        float:left;
+      }
+
+      #result
+      {
+        float:left;
+        width:50%;
+      }
+
+    </style>
+    <!--
+    Include the maps javascript with sensor=true because this code is using a
+    sensor (a GPS locator) to determine the user's location.
+    See: https://developers.google.com/maps/documentation/javascript/tutorial#Loading_the_Maps_API
+    -->
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.0/jquery.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true"></script>
+
+    <script>
+// Note: This example requires that you consent to location sharing when
+// prompted by your browser. If you see a blank space instead of the map, this
+// is probably because you have denied permission for location sharing.
+
+var map;
+var latitude;
+var longitude;
+var directionsDisplay;
+var directionsService = new google.maps.DirectionsService();
+var json;
+
+function initialize() {
+  var mapOptions = {
+    zoom: 12
+  };
+  map = new google.maps.Map(document.getElementById('map-canvas'),
+      mapOptions);
+    directionsDisplay = new google.maps.DirectionsRenderer();
+
+
+
+  // Try HTML5 geolocation
+  
+  if(navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function(position) {
+      var pos = new google.maps.LatLng(position.coords.latitude,
+                                       position.coords.longitude);
+
+      latitude = position.coords.latitude;
+      longitude = position.coords.longitude;
+
+      var marker = new google.maps.Marker({
+        map: map,
+        position: pos,
+        title:"Hello World!",
+        animation: google.maps.Animation.BOUNCE,
+      });
+
+      var infowindow = new google.maps.InfoWindow({
+        content: 'You are here.'
+      });
+       map.setCenter(pos);
+    google.maps.event.addListener(marker, 'mouseover', function() {
+      infowindow.open(map,marker);
+    });
+
+    google.maps.event.addListener(marker, 'mouseout', function() {
+      infowindow.close();
+    });
+
+    var arr =[]
+
+  $.get("{% url 'coor' %}?latitude="+latitude+"&longitude="+longitude,
+    function(data)
+    {
+      json = data;
+      console.log(data);
+      var marker,i, htmlBody;
+
+      var infowindow = new google.maps.InfoWindow();
+
+      for (i = 0; i < data.length; i++) 
+      {
+        var pos = new google.maps.LatLng(data[i].geometry.coordinates[1],
+                                               data[i].geometry.coordinates[0]);
+
+        marker = new google.maps.Marker({
+          map: map,
+          position: pos,
+          title:"Hello World!",
+          animation: google.maps.Animation.DROP,
+        });
+
+        google.maps.event.addListener(marker, 'click', (function(marker, i) {
+        return function() {
+           var request = {
+                origin:[longitude,latitude],
+                destination:[20,40],
+                travelMode: google.maps.TravelMode.DRIVING
+            };
+
+             directionsService.route(request, function(response, status) {
+              if (status == google.maps.DirectionsStatus.OK) {
+                directionsDisplay.setDirections(response);
+              }
+            });
+          }
+        })(marker, i));
+        
+        
+        google.maps.event.addListener(marker, 'mouseover', (function(marker, i) {
+        return function() {
+          htmlBody = "<table class='table table-bordered'>"
+          + "<tr><th>Name</th><td>"+ data[i].properties.name +"</td><tr>"
+          + "<th>Administrator</th><td>"+ data[i].properties.administrator +"</td></tr>"
+          + "<tr><th>Telephone</th><td>"+ data[i].properties.phone +"</td></tr>"
+          + "<tr><th>Address</th><td>"+ data[i].properties.address + ", " + data[i].properties.city +"</td></tr></table>";
+          infowindow.setContent(htmlBody);
+          infowindow.open(map, marker);
+          }
+        })(marker, i));
+
+        map.setCenter(pos);
+      }
+     
+     // renderMustache(json)
+    }), function() {
+      handleNoGeolocation(true);
+    }
+  })} else {
+    // Browser doesn't support Geolocation
+    handleNoGeolocation(false);
+  }
+}
+
+function handleNoGeolocation(errorFlag) {
+
+  if (errorFlag) {
+    var content = 'Error: The Geolocation service failed.';
+  } else {
+    var content = 'Error: Your browser doesn\'t support geolocation.';
+  }
+
+  var options = {
+    map: map,
+    position: new google.maps.LatLng(latitude, longitude),
+    content: content
+  };
+
+  var infowindow = new google.maps.InfoWindow(options);
+  map.setCenter(options.position);
+}
+
+google.maps.event.addDomListener(window, 'load', initialize);
+
+    
+    </script>
+  </head>
+  <body>
+  
+  <script id="test-template" type="text/mustache">
+          <table class='table table-hover tableRightData'>
+
+    [[#items]]
+        <tr>
+          <td>
+            [[properties.address]], [[properties.city]]
+          </td>
+        </tr>
+    [[/items]]
+          </table>
+
+  </script>
+
+    <div id="map-canvas"></div>
+    <div id="result">
+    </div>
+
+
+    <script type="text/javascript">
+
+    Mustache.tags = ['[[', ']]'];
+
+   // $("#filter").keyup(function(e)
+    //{
+     // filter = $("#filter").val();
+    //   var temp = json.items;
+    //   var result = _.filter(temp,function(item){
+    //     return item.volumeInfo.title.indexOf(filter) === 0;
+    //   });
+    //     var block = $("#block").hasClass("checked");
+    //     var list  = $("#list").hasClass("checked");
+    //       var template = $("#test-template").html();      
+    //       var html = Mustache.to_html(template, {
+    //              items:result,
+    //              block:block,
+    //              list :list
+    //           },{
+    //           "block-partial": $("#block-partial").html(),
+    //           "list-partial": $("#list-partial").html()
+    //           });     
+    //   $("#content").html(html);
+    // });
+    
+    function renderMustache(data)
+      {
+            var template = $("#test-template").html();
+            var html = Mustache.to_html(template, {
+                   items:data,
+                });
+            $("#result").html(html);
+      }
+
+    </script>
+  </body>
+</html>
