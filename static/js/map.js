@@ -123,15 +123,14 @@ function initialize() {
 
     
 
-  $.get("{% url 'coor' %}?latitude="+latitude+"&longitude="+longitude,
+  $.get("/getCoordinates/?latitude="+latitude+"&longitude="+longitude,
     function(data)
     {
       json = data;
-      console.log(data);
       var marker,i, htmlBody;
 
       var infowindow = new google.maps.InfoWindow();
-      var image = '{{ STATIC_URL }}' + "img/gomas.png";
+      var image = '/static/' + "img/gomas.png";
       for (i = 0; i < data.length; i++) 
       {
         var pos = new google.maps.LatLng(data[i].geometry.coordinates[1],
@@ -146,7 +145,6 @@ function initialize() {
 
 
         google.maps.event.addListener(marker, 'click', (function(marker,i) {
-        console.log(marker.position)
         return function(){
           var request = {
             origin: new google.maps.LatLng(latitude,longitude), 

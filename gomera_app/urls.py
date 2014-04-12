@@ -1,7 +1,8 @@
 from django.conf.urls import patterns, include, url
-from gomera.views import practice, getCoordinates
 from django.conf import settings
 from django.contrib import admin
+from gomera.views import indexView, getCoordinates
+
 admin.autodiscover()
 
 urlpatterns = patterns('',
@@ -9,9 +10,7 @@ urlpatterns = patterns('',
     # url(r'^$', 'gomera_app.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
 
-    url(r'^admin/', include(admin.site.urls)),
-    url(r'^$',include("gomera.urls")),
- 	url(r'^practice/$', practice, name='home'),
+    url(r'^$',indexView.as_view(),name = 'index'),
     url(r'^getCoordinates/$', getCoordinates, name='coor'),
 )
 
