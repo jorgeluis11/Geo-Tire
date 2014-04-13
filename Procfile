@@ -1,1 +1,0 @@
-web: gunicorn gomera_app.wsgi
