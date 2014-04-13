@@ -1,0 +1,54 @@
+    #about
+    {
+        background-color: black;
+        
+    }
+
+    #download{
+        padding-top: 0;
+    }
+    .content-section
+    {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+
+    #location
+    {
+        margin-top: 45px;
+        color:rgb(122, 118, 118);
+    }
+    
+    .intro-body
+    {
+        background-color: rgba(0,0,0,0.6)
+    }
+
+    #arrow{
+        font-size:50px;
+        border:1px solid white;
+        padding:1px 12px;
+        border-radius:40px;
+
+    }
+    .page-scroll:hover a
+    {
+        color:#FFF;
+    } 
+    .table-condensed{
+        border-radius:10px;
+    }
+
+          #map-canvas
+      {
+        width: 100%;
+        height: 600px;
+       float:left;
+      }
+
+      #result
+      {
+      }
+
+     
+      
