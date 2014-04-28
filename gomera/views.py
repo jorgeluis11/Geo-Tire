@@ -1,10 +1,11 @@
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import HttpResponse
 from django.views.generic import TemplateView
-# Create your views here.
-import json,httplib,urllib
+import json, httplib
+
 
 class indexView(TemplateView):
-	template_name  = 'index.html'
+    template_name  = 'index.html'
+
 
 def getCoordinates(request):
     if request.GET:
@@ -16,4 +17,3 @@ def getCoordinates(request):
         result = json.loads(connection.getresponse().read())
         return HttpResponse(json.dumps(result), content_type='application/json')
     return HttpResponse('')
-    
