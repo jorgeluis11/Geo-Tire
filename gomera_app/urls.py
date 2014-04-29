@@ -10,7 +10,7 @@ urlpatterns = patterns('',
     # url(r'^$', 'gomera_app.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
 
-    url(r'^$',indexView.as_view(),name = 'index'),
+    url(r'^$', indexView.as_view(), name='index'),
     url(r'^getCoordinates/$', getCoordinates, name='coor'),
 )
 
